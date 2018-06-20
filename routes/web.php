@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[
+    'uses' => 'PayPalController@index'
+]);
+
+Route::get('/store',[
+    'uses' => 'HomeController@store'
+]);
