@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 
 class PayPalController extends Controller
@@ -10,23 +11,19 @@ class PayPalController extends Controller
     public $apiUrl = "https://svcs.sandbox.paypal.com/AdaptivePayments/";
     public $paypalUrl = "https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey=";
     public $headers = [];
-
-
-    public $apiUser = 'serviceprovider1_api1.at.com';
-    public $apiPassword = '2B94EBNY3YA7YSVU';
-    public $apiSignature = 'ANAhfQvjC-U8ClXWFXJwsmR-MeJKARgB1DmUbKaPk-tGkh3zOclOLXrb';
-    public $appId = 'APP-80W284485P519543T';
     public $envelope = [];
 
     public function __construct(){
-        
+
+        $payPalConfig = Config::get('paypal');
+
         $this->headers = [
-            "X-PAYPAL-SECURITY-USERID: ".$this->apiUser,
-            "X-PAYPAL-SECURITY-PASSWORD: ".$this->apiPassword,
-            "X-PAYPAL-SECURITY-SIGNATURE: ".$this->apiSignature,
+            "X-PAYPAL-SECURITY-USERID: ".$payPalConfig['apiUser'],
+            "X-PAYPAL-SECURITY-PASSWORD: ".$payPalConfig['apiPassword'],
+            "X-PAYPAL-SECURITY-SIGNATURE: ".$payPalConfig['apiSignature'],
             "X-PAYPAL-REQUEST-DATA-FORMAT: JSON",
             "X-PAYPAL-RESPONSE-DATA-FORMAT: JSON",
-            "X-PAYPAL-APPLICATION-ID: ".$this->appId //
+            "X-PAYPAL-APPLICATION-ID: ".$payPalConfig['appId'] //
         ];
 
         $this->envelope = [
