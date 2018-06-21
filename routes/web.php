@@ -12,7 +12,7 @@
 */
 
 Route::get('/',[
-    'uses' => 'PayPalController@index'
+    'uses' => 'PayPalController@splitPay'
 ]);
 
 Route::get('/store',[
